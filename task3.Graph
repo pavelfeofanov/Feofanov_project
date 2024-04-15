@@ -1,0 +1,12 @@
+#pragma once
+#include <vector>
+#include <string>
+
+struct Graph {
+    int V; // количество вершин
+    int E; // количество ребер
+    std::vector<std::vector<int>> adj; // список смежности
+};
+
+void readGraph(const std::string& filename, Graph& graph);
+std::vector<int> greedyColoring(const Graph& graph);
