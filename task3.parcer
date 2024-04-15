@@ -1,0 +1,28 @@
+#include "Graph.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+void readGraph(const std::string& filename, Graph& graph) {
+    std::ifstream file(filename);
+    std::string line;
+
+    if (file.is_open()) {
+        getline(file, line);
+        std::istringstream iss(line);
+        iss >> graph.V >> graph.E;
+
+        graph.adj.resize(graph.V);
+
+        int u, v;
+        while (getline(file, line)) {
+            std::istringstream edgeStream(line);
+            edgeStream >> u >> v;
+            graph.adj[u].push_back(v);
+            graph.adj[v].push_back(u);
+        }
+        file.close();
+    } else {
+        std::cerr << "Не удалось открыть файл" << std::endl;
+    }
+}
