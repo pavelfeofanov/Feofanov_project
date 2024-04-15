@@ -1,0 +1,26 @@
+#include "Graph.h"
+#include <vector>
+
+std::vector<int> greedyColoring(const Graph& graph) {
+    std::vector<int> result(graph.V, -1);
+    result[0] = 0;
+    std::vector<bool> available(graph.V, true);
+
+    for (int u = 1; u < graph.V; u++) {
+        std::fill(available.begin(), available.end(), true);
+
+        for (int i : graph.adj[u]) {
+            if (result[i] != -1) {
+                available[result[i]] = false;
+            }
+        }
+
+        int cr;
+        for (cr = 0; cr < graph.V; cr++) {
+            if (available[cr]) break;
+        }
+
+        result[u] = cr;
+    }
+    return result;
+}
